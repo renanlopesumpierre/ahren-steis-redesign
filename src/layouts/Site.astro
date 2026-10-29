@@ -1,0 +1,58 @@
+---
+import ArrowLoop from '../components/ArrowLoop.astro';
+import RollLabel from '../components/RollLabel.astro';
+import '@fontsource-variable/inter/wght.css';
+import '@fontsource-variable/inter/wght-italic.css';
+import '@fontsource-variable/archivo/standard.css';
+import 'lenis/dist/lenis.css';
+import '../styles/global.css';
+import '../styles/refinement.css';
+import '../styles/experience.css';
+import '../styles/content.css';
+import Arrow from '../components/Arrow.astro';
+import Picture from '../components/Picture.astro';
+import { media } from '../data/projects';
+interface Props { title?:string; description?:string; image?:string; }
+const {title='Strategic Creative Direction & Film Production',description='Ahren Steis leads strategic creative direction and cinematic production for brands whose work needs to be understood. Production by Black Crowe Productions.',image='/media/share.jpg'}=Astro.props;
+const path=Astro.url.pathname;
+const siteUrl=Astro.site || new URL('https://www.ahrensteis.com');
+const links=[{href:'/work/',label:'Work'},{href:'/services/',label:'Services'},{href:'/about/',label:'About'},{href:'/insights/',label:'Insights'}];
+const menuPictures=[media.fragments,media.studio,media.portrait,media.direction,media.workshop];
+---
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{title} — Ahren Steis</title><meta name="description" content={description} />
+  <meta name="robots" content="noindex,nofollow" /><meta name="theme-color" content="#0c0c0c" />
+  <link rel="canonical" href={new URL(path,siteUrl)} />
+  <link rel="icon" href="/brand/favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" sizes="any" />
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" sizes="180x180" />
+  <meta property="og:type" content="website" /><meta property="og:title" content={`${title} — Ahren Steis`} /><meta property="og:description" content={description} /><meta property="og:image" content={new URL(image,siteUrl).href} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'Person',name:'Ahren Steis',url:'https://www.ahrensteis.com',jobTitle:'Creative Director',worksFor:{'@type':'Organization',name:'Black Crowe Productions'}})} />
+ </head>
+ <body class:list={[{'has-cinema':path==='/'}]}>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+   <span class="reading-progress" aria-hidden="true"></span>
+   <a class="brand" href="/" aria-label="Ahren Steis — home"><img src="/brand/ahren-steis-logo.svg" alt="Ahren Steis" width="440" height="182" loading="eager" decoding="async" /></a>
+   <nav class="desktop-nav" aria-label="Main navigation">{links.map(l=><a href={l.href} aria-current={path.startsWith(l.href)?'page':undefined}><RollLabel text={l.label} /></a>)}</nav>
+   <a class="header-cta" href="/contact/"><RollLabel text="Start a project" /><ArrowLoop /></a>
+   <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span class="menu-label">Menu</span><span class="menu-icon" aria-hidden="true"><i></i><i></i></span></button>
+   <noscript><nav class="no-script-nav" aria-label="Navigation without JavaScript"><a href="/work/">Work</a><a href="/contact/">Contact</a></nav><style>.menu-toggle{display:none!important}.no-script-nav{display:flex;gap:20px;margin-left:auto}.no-script-nav a{display:flex;min-height:44px;align-items:center;font-size:13px}</style></noscript>
+  </header>
+  <nav id="mobile-menu" class="mobile-nav" aria-label="Expanded navigation" hidden>
+   <div class="menu-links">{[...links,{href:'/contact/',label:'Start a project'}].map((l,i)=><a href={l.href} data-menu-scene={i} aria-current={path.startsWith(l.href)?'page':undefined}><RollLabel text={l.label} /><ArrowLoop /></a>)}<p>Ahren Steis<br/>Creative direction & film production.</p></div>
+   <div class="menu-visual" aria-hidden="true">{menuPictures.map((image,i)=><div class:list={['menu-photo',{'is-active':i===0}]} data-menu-photo={i}><Picture src={image} alt="" sizes="50vw" /></div>)}<span>Black Crowe Productions</span></div>
+  </nav>
+  <main id="main" tabindex="-1"><slot /></main>
+  <footer class="site-footer wrap">
+   <div class="footer-top"><a class="footer-wordmark" href="/" aria-label="Ahren Steis home">AHREN STEIS</a><p>Strategic creative direction.<br/>Production by Black Crowe.</p></div>
+   <div class="footer-bottom"><span>© {new Date().getFullYear()} Ahren Steis</span><nav aria-label="Footer navigation"><a href="/black-crowe-productions/">Black Crowe Productions <Arrow /></a><a href="/insights/">Field notes</a><a href="https://www.ahrensteis.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy <span class="sr-only">(opens in a new tab)</span><Arrow /></a></nav><a href="#main" class="back-top">Back to top ↑</a></div>
+  </footer>
+  <script src="../scripts/client.ts"></script>
+  <script src="../scripts/experience.ts"></script>
+ </body>
+</html>

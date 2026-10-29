@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": { "api/inquiry.js": { "maxDuration": 15 } },
+  "redirects": [
+    {"source":"/start-here","destination":"/contact/","permanent":true},
+    {"source":"/the-problem-may-not-be-your-marketing","destination":"/insights/the-problem-may-not-be-your-marketing/","permanent":true},
+    {"source":"/trust-is-not-a-claim","destination":"/insights/trust-is-not-a-claim/","permanent":true},
+    {"source":"/every-asset-needs-a-job","destination":"/insights/every-asset-needs-a-job/","permanent":true}
+  ],
+  "headers": [{"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"}]}]
+}

@@ -1,0 +1,71 @@
+---
+import Picture from './Picture.astro';
+import ArrowLoop from './ArrowLoop.astro';
+import RollLabel from './RollLabel.astro';
+import { media } from '../data/projects';
+const scenes = [
+ { title:'Fragments', image:media.fragments, alt:'A cinematic frame from Fragments', credit:'Directed by Brendan Nieto · Cinematography by Ahren Steis', href:'/work/we-the-free/', position:'60% 45%' },
+ { title:'Oak Bluffs', image:media.ralph, alt:'The interview setting for Ralph Lauren’s Oak Bluffs documentary', credit:'Ralph Lauren · Interview-segment cinematography by Ahren Steis', href:'/work/ralph-lauren/', position:'50% 45%' },
+ { title:'We The Free', image:media.workshop, alt:'A production frame with red and blue lighting', credit:'Creative development, cinematography & post-production', href:'/work/we-the-free/', position:'50% 45%' },
+];
+---
+<section class="cinema-hero cinema-strategy" aria-label="Ahren Steis — selected production frames" data-cinema>
+ <div class="cinema-scenes">
+  {scenes.map((scene,i)=><div class:list={['cinema-scene',{'is-active':i===0}]} data-scene={i} aria-hidden={i!==0}>
+   <Picture src={scene.image} alt={scene.alt} eager={i===0} position={scene.position} sizes="(max-width: 799px) 1600px, 100vw" />
+  </div>)}
+ </div>
+ <div class="cinema-content wrap">
+  <div class="strategy-copy">
+   <p class="strategy-signature">Ahren Steis <span aria-hidden="true">/</span> Black Crowe Productions</p>
+   <h1 class="strategy-title"><span>Precision strategy</span><span>for high-trust brands.</span></h1>
+   <p class="strategy-description">Bridging technical expertise and market understanding<br class="strategy-break" /> with cinematic proof.</p>
+   <a class="button strategy-work-link" href="#selected-work"><RollLabel text="View selected work" /><ArrowLoop direction="down" /></a>
+  </div>
+  <div class="cinema-bottom">
+   <div class="scene-picker" role="group" aria-label="Choose a production frame" hidden>{scenes.map((scene,i)=><button type="button" data-scene-button={i} aria-pressed={i===0} aria-label={`Show ${scene.title}`}><span class="scene-thumb"><Picture src={scene.image} alt="" sizes="120px" /></span><span class="scene-name">{scene.title}</span></button>)}</div>
+   <div class="scene-credits" aria-live="polite">{scenes.map((scene,i)=><div data-scene-credit={i} hidden={i!==0}><a href={scene.href}>{scene.title}<ArrowLoop /></a><p>{scene.credit}</p></div>)}</div>
+  </div>
+ </div>
+</section>
+
+<style is:global>
+ .cinema-strategy { min-height: 720px; }
+ .cinema-strategy::after { background: linear-gradient(90deg,#080a08d9 0%,#080a08a6 34%,#080a0833 72%,#080a081a),linear-gradient(180deg,#0005,transparent 40%,#0009); }
+ .cinema-strategy .cinema-content { padding-top: clamp(155px,18svh,220px); padding-bottom: 32px; gap: 44px; }
+ .strategy-copy { margin-block: auto; max-width: 850px; text-align: left; }
+ .strategy-signature { color: #deddd6; font-size: 12px; font-weight: 500; line-height: 1.65; letter-spacing: .065em; text-transform: uppercase; }
+ .strategy-signature > span { padding-inline: 9px; color: #ffffff60; }
+ .strategy-title { margin-top: 23px; font-family: var(--display); font-stretch: 82%; font-size: clamp(48px,5.15vw,78px); font-weight: 650; line-height: 1.04; letter-spacing: -.035em; text-transform: uppercase; }
+ .strategy-title > span { display: block; }
+ .strategy-description { margin-top: 25px; max-width: 54ch; font-size: clamp(16px,1.3vw,19px); font-weight: 400; line-height: 1.65; letter-spacing: -.015em; color: #deddd6; }
+ .strategy-work-link { margin-top: 30px; min-height: 48px; gap: 24px; padding: 13px 17px; font-size: 13px; border-color: #ffffff5c; }
+ .strategy-work-link .arrow-loop { width: 18px; height: 18px; }
+ .cinema-strategy .cinema-bottom { justify-content: flex-start; align-items: flex-end; gap: 46px; margin-top: 0; }
+ .cinema-strategy .scene-credits { min-height: 0; max-width: 300px; padding-bottom: 3px; }
+ @media (prefers-reduced-motion:no-preference) {
+  .strategy-copy > * { animation: detail-in .75s var(--ease-out) both; }
+  .strategy-title { animation-delay: .06s; }
+  .strategy-description { animation-delay: .12s; }
+  .strategy-work-link { animation-delay: .18s; }
+ }
+ @media (max-width:799px) {
+  .cinema-strategy { min-height: 760px; height: 100svh; }
+  .cinema-strategy .cinema-content { padding-top: 142px; padding-bottom: 28px; gap: 34px; }
+  .strategy-title { font-size: clamp(39px,6.1vw,50px); }
+  .strategy-description { font-size: 17px; }
+  .cinema-strategy .cinema-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .cinema-strategy .scene-credits { max-width: 380px; }
+ }
+ @media (max-width:540px) {
+  .cinema-strategy { min-height: 800px; }
+  .cinema-strategy::after { background: linear-gradient(90deg,#080a08d1,#080a0859),linear-gradient(180deg,#0006 0%,#0002 55%,#000b); }
+  .cinema-strategy .cinema-content { padding-top: 133px; gap: 34px; }
+  .strategy-signature { font-size: 11px; letter-spacing: .025em; }
+  .strategy-signature > span { padding-inline: 4px; }
+  .strategy-title { font-size: clamp(35px,8.2vw,44px); line-height: 1.06; letter-spacing: -.03em; margin-top: 20px; }
+  .strategy-description { margin-top: 22px; max-width: 32ch; font-size: 16px; line-height: 1.6; }
+  .strategy-break { display: none; }
+  .strategy-work-link { margin-top: 25px; }
+ }
+</style>

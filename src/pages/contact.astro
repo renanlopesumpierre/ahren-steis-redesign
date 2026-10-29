@@ -1,0 +1,54 @@
+---
+import ArrowLoop from '../components/ArrowLoop.astro';
+import RollLabel from '../components/RollLabel.astro';
+import Site from '../layouts/Site.astro';
+import Arrow from '../components/Arrow.astro';
+import Picture from '../components/Picture.astro';
+import { media } from '../data/projects';
+const inquiriesEnabled = import.meta.env.PUBLIC_CONTACT_FORM_ENABLED === 'true';
+---
+<Site title="Start a Project" description="Tell Ahren what you need to communicate and what the project should accomplish.">
+ <section class="start-context wrap section-space">
+  <div class="start-lead"><p class="eyebrow">Start here</p><h1>A conversation<br/>starts with context.</h1><p>I help technical leaders and high-trust brands identify the communication gap, determine what evidence will close it, and produce assets that sales and marketing can actually use.</p><a class="button button-light" href="#inquiry">Describe the problem <Arrow /></a></div>
+  <div class="start-fit"><h2>This work is most useful when:</h2><ul><li>Your offer is valuable but difficult to explain.</li><li>Your company has expertise but not enough visible proof.</li><li>Content is being produced without a defined job.</li></ul><p>The gap may be between what your company understands and what the buyer can see, believe and act on.</p></div>
+ </section>
+ <section class="start-questions wrap section-space"><div class="editorial-heading"><p class="eyebrow">Before recommending a production</p><h2>Find the gap.<br/>Define the evidence.</h2></div><div class="principle-rows"><article><h3>What needs to change?</h3><p>What does the audience currently misunderstand, doubt or overlook?</p></article><article><h3>What will make it believable?</h3><p>What must they see or hear before the claim becomes credible?</p></article><article><h3>What can the business use?</h3><p>Ahren leads strategy and creative direction. Black Crowe assembles the production capabilities appropriate to the assignment.</p></article></div></section>
+ <aside class="start-proof wrap"><div><p class="eyebrow">Selected proof · We The Free</p><h2>Original programming<br/>as one brand system.</h2><p>We The Free brought Coyote Ranch Films—the company Ahren co-owned—into the foundational work. Shows, production and promotion were developed together so each program supported the larger brand.</p><a class="text-link" href="/work/we-the-free/">Explore the work and scope <Arrow /></a></div><a href="/work/we-the-free/" aria-label="View the We The Free case study"><Picture src={media.studio} alt="Cameras and monitors during a We The Free production" sizes="(max-width:700px) 100vw, 45vw" /></a></aside>
+ <section id="inquiry" class="contact-page wrap">
+  <div class="contact-intro"><h2>Tell me what<br/>needs to change.</h2><p>A short description is enough.<br/>Include your audience and timing.</p></div>
+  {inquiriesEnabled ? <form id="inquiry-form" class="inquiry-form" action="/api/inquiry" method="post" aria-label="Project inquiry">
+   <div class="form-row"><div class="field"><label for="name">Your name <span>(required)</span></label><input type="text" id="name" name="name" autocomplete="name" placeholder="Full name" required minlength="2" maxlength="120" /></div><div class="field"><label for="email">Email <span>(required)</span></label><input type="email" id="email" name="email" autocomplete="email" placeholder="you@company.com" required maxlength="254" /></div></div>
+   <div class="field"><label for="company">Company <span>(optional)</span></label><input id="company" name="company" autocomplete="organization" placeholder="Company or organization" maxlength="160" /></div>
+   <fieldset class="service-choice"><legend>What can I help with?</legend><div>{[['strategy','Strategy'],['production','Production'],['continuity','Ongoing work'],['not-sure','Not sure yet']].map(([value,label])=><label><input type="radio" name="service" value={value} checked={value==='not-sure'} /><span>{label}</span></label>)}</div></fieldset>
+   <div class="field"><label for="project">Tell me about the project <span>(required)</span></label><textarea id="project" name="project" placeholder="What do you need to communicate, and to whom?" required minlength="20" maxlength="5000" rows="5" aria-describedby="project-hint"></textarea><p id="project-hint" class="field-hint">A few sentences are enough. Include a timeline if you have one.</p></div>
+   <div class="form-trap" aria-hidden="true"><label for="website">Leave empty</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
+   <p class="form-privacy">Your details are used to respond to this inquiry. <a href="https://www.ahrensteis.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy policy <span class="sr-only">(opens in a new tab)</span></a></p>
+   <button class="button button-red submit-button" type="submit"><span data-submit-label>Send project inquiry</span><Arrow /></button>
+   <div class="form-status" role="status" aria-live="polite" tabindex="-1" hidden><p data-status-message></p><a class="text-link" data-fallback href="https://www.ahrensteis.com/start-here" target="_blank" rel="noopener noreferrer" hidden><RollLabel text="Use Ahren’s contact page" /><ArrowLoop /><span class="sr-only">(opens in a new tab)</span></a></div>
+   <noscript><p class="form-status">To send your inquiry, <a href="https://www.ahrensteis.com/start-here">use Ahren’s contact page</a>.</p><style>.submit-button{display:none}</style></noscript>
+  </form> : <div class="contact-ready">
+   <h3>Share a little context.</h3>
+   <p>Share the context, the audience and what the work needs to accomplish.</p>
+   <a class="button button-light" href="https://www.ahrensteis.com/start-here#Recent%20Insights%20Feed" target="_blank" rel="noopener noreferrer"><RollLabel text="Send a project inquiry" /><ArrowLoop /><span class="sr-only">(opens in a new tab)</span></a>
+   <p class="contact-ready-note">Continue to Ahren’s inquiry form.</p>
+  </div>}
+  <aside class="contact-followup"><div class="contact-expect"><h2>What happens next</h2><ol class="contact-next"><li>I review the context personally.</li><li>If I see a useful way forward, we schedule a focused conversation.</li><li>Then I recommend the right scope, production approach and next step.</li></ol><a class="text-link" href="/insights/the-problem-may-not-be-your-marketing/">Not ready? Start with this field note <Arrow /></a></div><a class="text-link" href="https://www.instagram.com/ahrensteis/reels/" target="_blank" rel="noopener noreferrer"><RollLabel text="Ahren on Instagram" /><ArrowLoop /><span class="sr-only">(opens in a new tab)</span></a></aside>
+ </section>
+</Site>
+<script>
+const form=document.querySelector<HTMLFormElement>('#inquiry-form');
+const query=new URLSearchParams(location.search).get('service');
+if(query&&['strategy','production','continuity'].includes(query)){const input=form?.querySelector<HTMLInputElement>(`[value="${query}"]`);if(input)input.checked=true;}
+form?.addEventListener('submit',async e=>{
+ e.preventDefault();if(!form.reportValidity())return;
+ const button=form.querySelector<HTMLButtonElement>('[type=submit]')!,label=form.querySelector<HTMLElement>('[data-submit-label]')!,status=form.querySelector<HTMLElement>('.form-status')!,message=form.querySelector<HTMLElement>('[data-status-message]')!,fallback=form.querySelector<HTMLAnchorElement>('[data-fallback]')!;
+ button.disabled=true;label.textContent='Submitting…';form.setAttribute('aria-busy','true');status.hidden=true;fallback.hidden=true;
+ try{
+  const response=await fetch('/api/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(form))),signal:AbortSignal.timeout(15000)});
+  const result=await response.json();
+  if(!response.ok||!result.ok)throw new Error(result.error||'Online submission is temporarily unavailable. Please use the contact page below.');
+  message.textContent=result.message;form.reset();status.dataset.state='success';label.textContent='Send another inquiry';
+ }catch(error){message.textContent=error instanceof Error&&error.message.startsWith('Online')?error.message:'Online submission is temporarily unavailable. Your message has not been sent. Please use the contact page below.';fallback.hidden=false;status.dataset.state='error';label.textContent='Try again';}
+ finally{button.disabled=false;form.removeAttribute('aria-busy');status.hidden=false;status.focus();}
+});
+</script>

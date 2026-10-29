@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateInquiry,submitInquiry} from '../server/inquiry.mjs';
+const valid={name:'Local Test',email:'test@example.com',company:'',project:'Testing a local project inquiry without sending.',service:'production',website:''};
+const env={RESEND_API_KEY:'test-only',INQUIRY_TO:'test@example.com',INQUIRY_FROM:'test@example.com'};
+test('required data and message length are validated',()=>{assert.ok(validateInquiry({...valid,name:''}).error);assert.ok(validateInquiry({...valid,project:'Short'}).error);assert.ok(validateInquiry({...valid,project:'a'.repeat(5001)}).error);assert.ok(validateInquiry(valid).data);});
+test('email and service validation prevents invalid payloads',()=>{assert.ok(validateInquiry({...valid,email:'a\r\nb@c.com'}).error);assert.ok(validateInquiry({...valid,service:'arbitrary'}).error);});
+test('honeypot rejects automation before any outbound request',async()=>{let calls=0;const r=await submitInquiry({...valid,website:'spam'},{env,fetcher:()=>{calls++;}});assert.equal(r.status,400);assert.equal(calls,0);});
+test('unconfigured delivery never reports success',async()=>{const r=await submitInquiry(valid,{env:{}});assert.equal(r.status,503);assert.equal(r.body.ok,false);assert.match(r.body.fallback,/ahrensteis.com/);});
+test('confirmed provider acceptance is required for success',async()=>{let request;const r=await submitInquiry(valid,{env,fetcher:async(_url,options)=>{request=JSON.parse(options.body);return {ok:true,json:async()=>({id:'mock-accepted'})};}});assert.equal(r.status,200);assert.equal(request.reply_to,valid.email);assert.match(request.text,/Testing a local/);});
+test('provider rejection and network failure preserve recovery path',async()=>{for(const fetcher of [async()=>({ok:false}),async()=>{throw Error('network');},async()=>({ok:true,json:async()=>({})})]){const r=await submitInquiry(valid,{env,fetcher});assert.equal(r.status,502);assert.equal(r.body.ok,false);assert.ok(r.body.fallback);}});

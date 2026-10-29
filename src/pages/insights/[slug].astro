@@ -1,0 +1,17 @@
+---
+import ArrowLoop from '../../components/ArrowLoop.astro';
+import RollLabel from '../../components/RollLabel.astro';
+import Site from '../../layouts/Site.astro';
+import Arrow from '../../components/Arrow.astro';
+import notes from '../../data/notes.json';
+export function getStaticPaths(){return notes.map((note,index)=>({params:{slug:note.slug},props:{note,next:notes[(index+1)%notes.length]}}));}
+const {note,next}=Astro.props;
+const minutes=Math.ceil(note.blocks.map(b=>b.text).join(' ').split(/\s+/).length/220);
+---
+<Site title={note.title} description={note.description}>
+ <article class="article-page wrap">
+  <header class="article-header"><a class="text-link" href="/insights/">← Field notes</a><h1>{note.title}</h1><div class="article-meta"><span>By Ahren Steis</span><span>{note.category}</span><span>{minutes} min read</span></div></header>
+  <div class="article-body">{note.blocks.map(b=>b.type==='heading'?<h2>{b.text}</h2>:<p>{b.text}</p>)}<a class="button button-red" href="/contact/"><RollLabel text="Discuss your project" /><ArrowLoop /></a></div>
+ </article>
+ <section class="article-next wrap section-space"><span>Next field note</span><a href={`/insights/${next.slug}/`}><h2>{next.title}</h2><Arrow /></a></section>
+</Site>

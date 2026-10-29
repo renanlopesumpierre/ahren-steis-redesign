@@ -1,0 +1,10 @@
+research/
+qa/
+.env
+.env.local
+.git/
+*.md
+/scripts/
+.astro/
+.DS_Store
+.env.*

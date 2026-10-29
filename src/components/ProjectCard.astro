@@ -1,0 +1,20 @@
+---
+import Picture from './Picture.astro';
+import Arrow from './Arrow.astro';
+import ArrowLoop from './ArrowLoop.astro';
+import type { Project } from '../data/projects';
+interface Props { project:Project; featured?:boolean; portraitSequence?:boolean; }
+const {project:p,featured=false,portraitSequence=false}=Astro.props;
+const alternate=portraitSequence?undefined:p.frames.find(frame=>frame.image.src!==p.cover.src);
+---
+<article class:list={['project-card',{'project-featured':featured,'project-portrait':p.slug==='kentucky-ballistics'}]} data-project={p.slug} data-category={p.category} data-reveal>
+ <a href={`/work/${p.slug}/`} class="project-link" aria-label={`View project: ${p.shortTitle}`}>
+  <div class:list={['project-image',{'project-sequence':portraitSequence}]} style={`view-transition-name:project-${p.slug};--project-ratio:${p.cover.width} / ${p.cover.height}`} data-project-media>
+   {portraitSequence?<div class="project-triptych">{p.frames.map(f=><div><Picture src={f.image} alt={f.alt} sizes="(max-width: 700px) 33vw, 18vw" /></div>)}</div>:<Picture src={p.cover} alt={p.alt} position={p.position} sizes={featured?'100vw':'(max-width: 700px) 100vw, 55vw'} />}
+   {alternate&&<div class="project-alternate" aria-hidden="true"><Picture src={alternate.image} alt="" sizes={featured?'100vw':'(max-width: 700px) 100vw, 55vw'} /></div>}
+   <span class="image-action" aria-hidden="true"><span>View project</span><Arrow /></span>
+  </div>
+  <div class="project-meta"><div><p class="project-type">{p.purpose}</p><h3>{p.shortTitle}</h3></div><ArrowLoop /></div>
+ </a>
+ <p class="project-description">{p.description}</p>
+</article>

@@ -1,0 +1,37 @@
+---
+import ArrowLoop from './ArrowLoop.astro';
+import type { Project } from '../data/projects';
+interface Props { project: Project; }
+const { project } = Astro.props;
+---
+<nav class="project-pagination" aria-label="Continue exploring projects">
+ <a class="project-pagination-link wrap" href={`/work/${project.slug}/`}>
+  <div class="project-pagination-copy">
+   <span class="project-pagination-label">Next project</span>
+   <h2>{project.shortTitle}</h2>
+   <p>{project.type}</p>
+  </div>
+  <span class="project-pagination-arrow" aria-hidden="true"><ArrowLoop /></span>
+ </a>
+</nav>
+<style>
+ .project-pagination { background: #151515; border-block: 1px solid #ffffff16; }
+ .project-pagination-link { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding-block: clamp(44px,5.5vw,90px); }
+ .project-pagination-copy { min-width: 0; }
+ .project-pagination-label { display: block; color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+ .project-pagination h2 { font-family: var(--display); font-size: clamp(36px,5.6vw,88px); font-stretch: 88%; font-weight: 560; letter-spacing: -.045em; line-height: 1.05; text-wrap: balance; }
+ .project-pagination p { font-size: 14px; color: var(--muted); margin-top: 18px; }
+ .project-pagination-arrow { display: grid; place-items: center; width: 76px; height: 76px; flex: 0 0 auto; background: var(--text); color: var(--bg); transition: background .25s, color .25s; }
+ .project-pagination-arrow :global(.arrow-loop) { width: 30px; height: 30px; }
+ .project-pagination-arrow :global(.arrow) { width: 30px; height: 30px; }
+ .project-pagination-link:is(:hover,:focus-visible) .project-pagination-arrow { color: white; background: var(--red); }
+ .project-pagination-link:focus-visible { outline-offset: -5px; }
+ @media(max-width:600px) {
+  .project-pagination-link { gap: 24px; }
+  .project-pagination-label { margin-bottom: 18px; }
+  .project-pagination p { font-size: 13px; margin-top: 14px; }
+  .project-pagination-arrow { width: 48px; height: 48px; }
+  .project-pagination-arrow :global(.arrow-loop), .project-pagination-arrow :global(.arrow) { width: 22px; height: 22px; }
+ }
+ @media(prefers-reduced-motion:reduce) { .project-pagination-arrow { transition: none; } }
+</style>

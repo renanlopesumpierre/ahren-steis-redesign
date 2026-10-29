@@ -1,0 +1,4 @@
+---
+const { direction = 'up-right', class: className = '' } = Astro.props;
+---
+<svg class:list={['arrow',className]} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={direction === 'right' ? 'M4 12h16m-6-6 6 6-6 6' : direction === 'down' ? 'M12 4v16m-6-6 6 6 6-6' : 'M5 19 19 5M5 5h14v14'} stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>

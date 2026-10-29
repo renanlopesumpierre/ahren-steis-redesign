@@ -1,0 +1,14 @@
+---
+import Site from '../../layouts/Site.astro';
+import Arrow from '../../components/Arrow.astro';
+import ContactBand from '../../components/ContactBand.astro';
+import notes from '../../data/notes.json';
+---
+<Site title="Field Notes" description="Notes by Ahren Steis on communication, creative decisions and production with a defined purpose.">
+ <section class="page-intro wrap"><h1>FIELD<br/>NOTES.</h1><p>Notes on communication problems,<br/>creative decisions and useful production.</p></section>
+ <section class="notes-index wrap">{notes.map(n=><a href={`/insights/${n.slug}/`} data-reveal><span>{n.category}</span><h2>{n.title}</h2><p>{n.description}</p><Arrow /></a>)}</section>
+ <section class="reels-section wrap section-space"><h2>Watch Ahren<br/>on communication.</h2><div class="notes-list"><a href="https://www.instagram.com/ahrensteis/reel/Dd8zmVqBhNk/" target="_blank" rel="noopener noreferrer"><span>Video · Instagram</span><h3>A clearer path through your website</h3><Arrow /><span class="sr-only">Opens on Instagram in a new tab</span></a><a href="https://www.instagram.com/ahrensteis/reel/DWhbBWkje42/" target="_blank" rel="noopener noreferrer"><span>Video · Instagram</span><h3>Framing, lighting and communication</h3><Arrow /><span class="sr-only">Opens on Instagram in a new tab</span></a></div></section>
+ <section class="notes-scope wrap section-space"><div class="editorial-heading"><p class="eyebrow">What these notes examine</p><h2>The decisions behind<br/>useful production.</h2></div><div class="principle-rows"><article><h3>Diagnosis & judgment</h3><p>What does the audience need to understand—and what evidence would give them a reasonable basis to believe it?</p></article><article><h3>Production & performance</h3><p>What job does each asset need to do, where will it appear, and what is worth capturing without adding unnecessary scope?</p></article></div></section>
+ <aside class="field-note-signup wrap"><div><h2>Get the next field note.</h2><p>Notes from Ahren on communication, evidence and production decisions.</p></div><a class="button button-light" href="https://www.ahrensteis.com/insights#form-db412430-ef8b-4ade-b305-df29f16c8588" target="_blank" rel="noopener noreferrer">Subscribe to field notes <Arrow /><span class="sr-only">(opens Ahren’s signup page in a new tab)</span></a></aside>
+ <ContactBand />
+</Site>

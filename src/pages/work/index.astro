@@ -1,0 +1,12 @@
+---
+import Site from '../../layouts/Site.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ContactBand from '../../components/ContactBand.astro';
+import { projects } from '../../data/projects';
+---
+<Site title="Selected Work" description="Selected documentary, original programming and production work by Ahren Steis, with roles and production credits.">
+ <section class="page-intro wrap"><h1>SELECTED<br/>WORK.</h1><p>Work organized by what the assignment<br/>needed to accomplish.</p></section>
+ <section class="work-collection wrap"><noscript><style>.filters{display:none}</style></noscript><div class="work-toolbar"><div class="filters" aria-label="Filter projects">{['All','Creative development','Cinematography','Production & editorial'].map((f,i)=><button type="button" data-filter={f} aria-pressed={i===0?'true':'false'}>{f}</button>)}</div><div class="view-switch" role="group" aria-label="Project layout" hidden><button type="button" data-work-view="grid" aria-pressed="true">Grid</button><button type="button" data-work-view="list" aria-pressed="false">Index</button></div></div><p class="sr-only" data-filter-status aria-live="polite">3 projects shown</p><div class="work-grid">{projects.map((p,i)=><ProjectCard project={p} featured={i===0} portraitSequence={p.slug==='kentucky-ballistics'} />)}</div></section>
+ <section class="experience wrap section-space"><div><h2>Additional<br/>experience.</h2><p>Selected contributions in specific production and post-production roles.</p></div><div class="experience-list"><article><h3>Print Shoot Repeat</h3><p><i>PSR Uncensored and With a Budget</i> — cinematography, camera, creative development, visual effects and production support, uncredited. Additional filming at Finnish Brutality.</p></article><article><h3>What The Kicks</h3><p><i>Pimp My Pew</i>, featuring Xzibit — cinematography, camera and production support, uncredited. Ahren also directed a separate What The Kicks episode.</p></article><article><h3>Armstrong Williams</h3><p>Documentary editor. Director of photography and camera operator for a masterclass-style production developed through We The Free.</p></article></div></section>
+ <ContactBand />
+</Site>

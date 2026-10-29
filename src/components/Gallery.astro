@@ -1,0 +1,20 @@
+---
+import Picture from './Picture.astro';
+import Arrow from './Arrow.astro';
+import ArrowLoop from './ArrowLoop.astro';
+import { getImage } from 'astro:assets';
+import type { Frame } from '../data/projects';
+import { hasCaptureEdge } from '../data/imagePresentation';
+interface Props { frames:Frame[]; id:string; portrait?:boolean; }
+const {frames,id,portrait=false}=Astro.props;
+const images=await Promise.all(frames.map(async f=>({...f,large:(await getImage({src:f.image,width:Math.min(f.image.width,1920),format:'webp',quality:88})).src})));
+---
+<div class:list={['frame-grid',{'frame-grid-portrait':portrait}]} data-gallery={id}>
+ {images.map((f,i)=><figure data-reveal><a href={f.large} style={`--frame-ratio:${f.image.width} / ${f.image.height}`} data-frame data-index={i} data-caption={f.caption} data-capture-edge={hasCaptureEdge(f.image) || undefined} aria-label={`Open frame: ${f.alt}`}><Picture src={f.image} alt={f.alt} sizes="(max-width: 700px) 100vw, 50vw" /><span class="frame-open"><span class="frame-open-label">View frame</span><ArrowLoop /></span></a><figcaption>{f.caption}</figcaption></figure>)}
+</div>
+<dialog class="lightbox" data-lightbox={id} aria-label="Selected production frames">
+ <div class="lightbox-bar"><span data-frame-count></span><button type="button" data-gallery-close aria-label="Close gallery">Close <span aria-hidden="true">×</span></button></div>
+ <div class="lightbox-image"><img data-gallery-image src={images[0]?.large} alt={images[0]?.alt || ""} loading="lazy" width="1920" height="1080" /></div>
+ <div class="lightbox-bottom"><p data-gallery-caption></p><div><button type="button" data-gallery-prev aria-label="Previous frame"><span aria-hidden="true">←</span></button><button type="button" data-gallery-next aria-label="Next frame"><Arrow direction="right" /></button></div></div>
+ <div class="lightbox-thumbs" role="group" aria-label="Choose a frame">{images.map((f,i)=><button class="lightbox-thumb" type="button" data-gallery-thumb aria-label={`Frame ${i+1}: ${f.caption}`} aria-pressed={i===0}><Picture src={f.image} alt="" sizes="76px" /></button>)}</div>
+</dialog>

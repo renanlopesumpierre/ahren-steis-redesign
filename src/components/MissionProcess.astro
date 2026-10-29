@@ -1,0 +1,17 @@
+---
+import Picture from './Picture.astro';
+import joe from '../assets/home-03.png';
+import kicks from '../assets/home-04.png';
+import xzibit from '../assets/home-05.png';
+import warrior from '../assets/home-06.jpg';
+const stages = [
+ {title:'Diagnose',text:'Identify the market gap. What must the audience understand, believe, or do?',image:joe,alt:'Joe Farewell in Road to Mastery',position:'50% 38%'},
+ {title:'Define',text:'Map the evidence. What message and creative evidence will move them?',image:kicks,alt:'What the Kicks in Pimp My Pew',position:'33% 50%'},
+ {title:'Produce',text:'Directed execution. Capture only what the campaign can put to work.',image:xzibit,alt:'Special guest Xzibit in Pimp My Pew',position:'40% 50%'},
+ {title:'Deploy',text:'High-utility assets. Use every asset across sales, web, and social.',image:warrior,alt:'Two characters beside the water in The Warrior',position:'50% 50%'}
+];
+---
+<section class="mission-process wrap section-space" aria-labelledby="mission-title">
+ <div class="editorial-heading" data-reveal><p class="eyebrow">How risk gets removed</p><h2 id="mission-title">No camera until<br/>the mission is clear.</h2></div>
+ <ol class="mission-stages">{stages.map((stage,i)=><li data-reveal><div class="mission-image"><Picture src={stage.image} alt={stage.alt} position={stage.position} sizes="(max-width:600px) 45vw, (max-width:900px) 44vw, 23vw" /></div><div class="mission-label"><span aria-hidden="true">0{i+1}</span><h3>{stage.title}</h3></div><p>{stage.text}</p></li>)}</ol>
+</section>

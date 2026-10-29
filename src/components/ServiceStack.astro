@@ -1,0 +1,16 @@
+---
+import ArrowLoop from './ArrowLoop.astro';
+import RollLabel from './RollLabel.astro';
+import Picture from './Picture.astro';
+import { media, services } from '../data/projects';
+const pictures=[{src:media.direction,alt:'Ahren reviewing the production from the monitor station'}, {src:media.studio,alt:'Cameras and production monitors on set'},{src:media.workshop,alt:'A frame from a We The Free production'}];
+---
+<section class="service-stack-section wrap section-space">
+ <div class="section-heading" data-reveal><h2>From strategy<br/>to production.</h2><a class="text-link" href="/services/"><RollLabel text="How we work" /><ArrowLoop /></a></div>
+ <div class="service-stack">
+  {services.map((service,i)=><article class="service-panel" style={`--panel-index:${i}`}>
+   <div class="service-panel-copy"><h3>{service.title}</h3><p>{service.description}</p><ul>{service.items.map(item=><li>{item}</li>)}</ul><a class="button button-outline" href={`/contact/?service=${['strategy','production','continuity'][i]}`}><RollLabel text={`Discuss ${['strategy','a production','ongoing work'][i]}`} /><ArrowLoop /></a></div>
+   <div class="service-panel-image"><Picture src={pictures[i].src} alt={pictures[i].alt} sizes="(max-width: 799px) 100vw, 55vw" /></div>
+  </article>)}
+ </div>
+</section>

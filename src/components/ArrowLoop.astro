@@ -1,0 +1,6 @@
+---
+import Arrow from './Arrow.astro';
+interface Props { direction?:'up-right'|'down'|'right'; }
+const {direction='up-right'}=Astro.props;
+---
+<span class:list={['arrow-loop',`arrow-loop-${direction}`]} aria-hidden="true"><span class="arrow-track"><Arrow direction={direction} /><Arrow direction={direction} /></span></span>

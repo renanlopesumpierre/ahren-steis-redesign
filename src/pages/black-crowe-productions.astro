@@ -1,0 +1,22 @@
+---
+import ArrowLoop from '../components/ArrowLoop.astro';
+import RollLabel from '../components/RollLabel.astro';
+import Site from '../layouts/Site.astro';
+import Picture from '../components/Picture.astro';
+import ContactBand from '../components/ContactBand.astro';
+import { media } from '../data/projects';
+---
+<Site title="Black Crowe Productions" description="Production built around the assignment, with Ahren Steis as the strategic and creative lead.">
+ <section class="page-intro wrap"><h1 class="studio-title">BLACK CROWE<br/>PRODUCTIONS.</h1><p>Production built around the assignment.<br/>Led by Ahren Steis.</p></section>
+ <div class="wide-photo"><Picture src={media.set} alt="Lighting, camera and crew on a production set" eager /></div>
+ <section class="about-story wrap section-space"><h2>The right production<br/>for the work.</h2><div><p class="large-copy">Black Crowe is the production operation behind Ahren’s strategic and creative direction.</p><p>Teams are assembled around the assignment. That can mean leading a full production or contributing specific capabilities within an existing agency, company or production team.</p><p>Ahren leads a network of producers, camera operators, lighting, audio, art and post-production specialists. The team scales to the assignment, with one strategic and creative lead from planning through delivery.</p><a class="text-link" href="/services/"><RollLabel text="Services and working process" /><ArrowLoop /></a></div></section>
+ <section class="production-capabilities wrap section-space"><div class="editorial-heading"><p class="eyebrow">Production capabilities</p><h2>The format follows<br/>the assignment.</h2></div><div class="principle-rows">
+ <article><h3>Branded documentary</h3><p>Company, founder and customer stories built around credible people and visible evidence.</p></article>
+ <article><h3>Episodic & streaming</h3><p>Original programming, interviews and repeatable show formats with a consistent identity across episodes.</p></article>
+ <article><h3>Campaign production</h3><p>Principal films, demonstrations, interviews, social edits and supporting assets planned as one production.</p></article>
+ <article><h3>Live & event production</h3><p>Multicamera recording, live switching, event coverage and broadcast support, with material that can be used after the event.</p></article>
+ <article><h3>Post-production</h3><p>Editorial, sound, visual effects, color, finishing and versions prepared for their intended use.</p></article>
+ </div></section>
+ <section class="delivery-process wrap section-space"><div class="editorial-heading"><p class="eyebrow">From brief to delivery</p><h2>Build the production<br/>around its purpose.</h2></div><ol class="delivery-steps"><li><h3>Define the job</h3><p>Establish the audience, message, evidence and intended use.</p></li><li><h3>Build the production</h3><p>Match the crew, equipment and schedule to the assignment.</p></li><li><h3>Capture what matters</h3><p>Direct the production around what the finished work must communicate.</p></li><li><h3>Deliver a useful system</h3><p>Prepare the main work and supporting assets for the places they need to appear.</p></li></ol></section>
+ <ContactBand />
+</Site>

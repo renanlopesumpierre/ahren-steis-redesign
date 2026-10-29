@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.DS_Store
+.env*
+!.env.example
+
+# Notas internas da Bionica (não vão pro GitHub)
+research/
+qa/
+.impeccable/
+LEIA-ME-INTERNO.md
+HANDOFF.md
+PLANO.md
+PUBLICADO.md
+scripts/build-brand-vectors.mjs

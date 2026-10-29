@@ -1,0 +1,31 @@
+---
+import ArrowLoop from '../components/ArrowLoop.astro';
+import RollLabel from '../components/RollLabel.astro';
+import Site from '../layouts/Site.astro';
+import Picture from '../components/Picture.astro';
+import Arrow from '../components/Arrow.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ContactBand from '../components/ContactBand.astro';
+import Gallery from '../components/Gallery.astro';
+import CinematicHero from '../components/CinematicHero.astro';
+import MissionProcess from '../components/MissionProcess.astro';
+import ServiceStack from '../components/ServiceStack.astro';
+import { projects, media, selectedFrames } from '../data/projects';
+---
+<Site>
+ <CinematicHero />
+ <section class="intro-statement wrap section-space"><h2 data-reveal>Strategy before<br/>production.</h2><div data-reveal><p>I help high-trust brands turn complex expertise into clear communication and cinematic work.</p><p class="intro-detail">Identify the communication gap, define the evidence that will close it, and create assets that sales and marketing can put to work.</p><a class="text-link" href="/about/"><RollLabel text="Meet Ahren" /><ArrowLoop /></a></div></section>
+ <section id="selected-work" class="selected-work wrap section-space">
+  <div class="section-heading" data-reveal><h2>Selected work<span class="count">(03)</span></h2><a class="text-link" href="/work/"><RollLabel text="All projects" /><ArrowLoop /></a></div>
+  <div class="home-projects"><ProjectCard project={projects[1]} featured /><ProjectCard project={projects[0]} /><ProjectCard project={projects[2]} /></div>
+ </section>
+ <ServiceStack />
+ <MissionProcess />
+ <section class="about-preview wrap section-space">
+  <div class="about-picture" data-reveal><Picture src={media.portrait} alt="Portrait of Ahren Steis" sizes="(max-width: 700px) 100vw, 52vw" /></div>
+  <div class="about-copy" data-reveal><h2>Creative direction<br/>& production.</h2><p>I lead the strategy and creative direction. Through Black Crowe Productions, I assemble the production around the assignment—from a focused interview to a larger campaign.</p><a class="button button-light" href="/about/"><RollLabel text="About Ahren" /><ArrowLoop /></a></div>
+ </section>
+ <section id="selected-frames" class="frames-section wrap section-space"><div class="section-heading" data-reveal><h2>Selected frames</h2><p>A closer look at the work.</p></div><Gallery frames={selectedFrames} id="home-frames" /></section>
+ <section class="insights-preview wrap section-space" data-reveal><div><h2>Notes on<br/>the work.</h2><p>Communication problems, creative decisions<br/>and production with a defined purpose.</p></div><div class="notes-list"><a href="/insights/the-problem-may-not-be-your-marketing/"><span>Diagnosis & positioning</span><h3>The problem may not be your marketing</h3><Arrow /></a><a href="/insights/trust-is-not-a-claim/"><span>Proof & trust</span><h3>Trust is not a claim</h3><Arrow /></a><a href="/insights/every-asset-needs-a-job/"><span>Creative decisions</span><h3>Every asset needs a job</h3><Arrow /></a></div></section>
+ <ContactBand />
+</Site>

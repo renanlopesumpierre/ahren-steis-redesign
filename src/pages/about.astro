@@ -1,0 +1,16 @@
+---
+import ArrowLoop from '../components/ArrowLoop.astro';
+import RollLabel from '../components/RollLabel.astro';
+import Site from '../layouts/Site.astro';
+import Picture from '../components/Picture.astro';
+import ContactBand from '../components/ContactBand.astro';
+import { media } from '../data/projects';
+---
+<Site title="About Ahren" description="Ahren Steis works across strategic creative direction, cinematography and production. Meet the creative lead behind Black Crowe Productions.">
+ <section class="about-hero wrap"><div><h1>AHREN<br/>STEIS.</h1><p>Creative direction, cinematography<br/>and production.</p><a class="text-link" href="/contact/"><RollLabel text="Start a conversation" /><ArrowLoop /></a></div><div class="portrait"><Picture src={media.portrait} alt="Portrait of Ahren Steis" eager sizes="(max-width:700px) 100vw, 45vw" /></div></section>
+ <section class="about-story wrap section-space"><h2>From the communication<br/>problem to the production.</h2><div><p class="large-copy">I work with brands that need to make their expertise clearer and give their audience a reason to believe it.</p><p>My experience spans creative development, cinematography, directing selected productions, editorial, visual effects, audio and live broadcast. That range connects the strategic questions to the practical decisions on set and in post-production.</p><p>The work includes original programming for We The Free through Coyote Ranch Films, interview-segment cinematography for Ralph Lauren’s Oak Bluffs documentary and camera and editorial contributions to Kentucky Ballistics.</p><a class="text-link" href="/work/"><RollLabel text="View the work and credits" /><ArrowLoop /></a></div></section>
+ <section class="content-principles wrap section-space" aria-labelledby="principles-title"><div class="editorial-heading"><p class="eyebrow">What the work needs to do</p><h2 id="principles-title">Make expertise clear.<br/>Give buyers evidence.</h2></div><div class="principle-rows"><article><h3>Strategic alignment</h3><p>Bridge technical complexity and market understanding. Turn deep expertise into a clear message that supports a decision.</p></article><article><h3>Cinematic proof</h3><p>Use production as evidence. Show the people, processes and results behind the claim so the audience can see what makes it credible.</p></article><article><h3>Reduce buyer uncertainty</h3><p>Give buyers useful information before the first sales conversation. Address what they need to understand and believe before they can act.</p></article></div></section>
+ <div class="wide-photo"><Picture src={media.direction} alt="Behind the scenes at a production monitor station" /></div>
+ <section class="working-model wrap section-space"><h2>Ahren Steis &<br/>Black Crowe.</h2><div><article><h3>Strategy & creative direction</h3><p>I identify what the audience needs to understand, define the evidence and guide the creative decisions.</p></article><article><h3>Production built for the assignment</h3><p>Black Crowe Productions brings together the team and resources to execute that direction. The structure can range from a focused production to a larger campaign or ongoing partnership.</p><a class="text-link" href="/black-crowe-productions/"><RollLabel text="About Black Crowe" /><ArrowLoop /></a></article></div></section>
+ <ContactBand />
+</Site>

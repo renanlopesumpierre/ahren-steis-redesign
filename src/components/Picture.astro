@@ -1,0 +1,8 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { hasCaptureEdge } from '../data/imagePresentation';
+interface Props { src:ImageMetadata; alt:string; class?:string; sizes?:string; eager?:boolean; position?:string; }
+const {src,alt,class:className='', sizes='(max-width: 700px) 100vw, 100vw', eager=false,position='center'}=Astro.props;
+---
+<Image src={src} width={Math.min(src.width,1600)} alt={alt} class={className} data-capture-edge={hasCaptureEdge(src) || undefined} widths={[480,800,1200,1600,1920].filter(w=>w<=src.width)} sizes={sizes} format="webp" quality={82} loading={eager?'eager':'lazy'} decoding="async" fetchpriority={eager?'high':undefined} style={`object-position:${position}`} />
