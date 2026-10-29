@@ -1,4 +1,4 @@
-import { readdir, readFile, access, writeFile, stat } from 'node:fs/promises';
+import { readdir, readFile, access, writeFile, stat, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 const root=path.resolve('dist');
 async function walk(dir){let out=[];for(const e of await readdir(dir,{withFileTypes:true})){const p=path.join(dir,e.name);out.push(...(e.isDirectory()?await walk(p):[p]));}return out;}
@@ -16,6 +16,6 @@ for(const file of pages){
  summary.push({route,redirect,h1,htmlBytes:Buffer.byteLength(html),inlineScriptBytes:[...html.matchAll(/<script type="module">([\s\S]*?)<\/script>/g)].reduce((n,m)=>n+Buffer.byteLength(m[1]),0)});
 }
 const code=files.filter(f=>/\.(js|css)$/.test(f));const sizes=await Promise.all(code.map(async f=>({file:path.relative(root,f),bytes:(await stat(f)).size})));
-const report={pages:summary,code:sizes,errors:[...new Set(errors)]};await writeFile('qa/static-verification.json',JSON.stringify(report,null,2));
+const report={pages:summary,code:sizes,errors:[...new Set(errors)]};await mkdir('qa',{recursive:true});await writeFile('qa/static-verification.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify({pages:pages.length,contentPages:summary.filter(p=>!p.redirect).length,redirects:summary.filter(p=>p.redirect).length,errors:report.errors,code:sizes},null,2));
 if(errors.length)process.exitCode=1;
